@@ -108,15 +108,15 @@ class List extends React.Component {
 
           if(listItem.done === "false"){
               return (
-                  <div className="list-item" key={index} >
-                      <i className='bx bx-checkbox' onClick={ () => { this.checkDone(index)}}></i>
+                  <div className="list-item" key={index}  onClick={ () => { this.checkDone(index)}}>
+                      <i className='bx bx-checkbox'></i>
                         {listItem.task}
                 </div>
                     );
           } else if(listItem.done === "true"){
               return (
-                  <div className="list-item completed" key={index} >
-                      <i className='bx bx-checkbox-checked' onClick={ () => { this.checkDone(index)}}></i>
+                  <div className="list-item completed" key={index} onClick={ () => { this.checkDone(index)}} >
+                      <i className='bx bx-checkbox-checked'></i>
                         {listItem.task}
                     </div>
                 );
@@ -126,6 +126,7 @@ class List extends React.Component {
       // console.log("rendering");
       return (
          <div className="container">
+         <h1>To Do List</h1>
             <div className="add-item">
                 <input onChange={(event)=>{this.changeHandler(event)}} onKeyDown={(event)=>{this.enterHandler(event)}} value={this.state.task}/>
                 <button onClick={(event)=>{this.addItem(event)}}>Add</button>
