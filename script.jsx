@@ -8,13 +8,13 @@ class List extends React.Component {
       list : [
           {
             "task": "Eat laksa",
-            "done": "done",
+            "done": "true",
             "created_at": "August 29th 2019, 1:40:58 pm",
             "updated_at": "August 29th 2019, 1:40:58 pm"
           },
           {
             "task": "Go swimming",
-            "done": "done",
+            "done": "true",
             "created_at": "August 29th 2019, 1:40:58 pm",
             "updated_at": "August 29th 2019, 1:40:58 pm"
           },
@@ -79,25 +79,45 @@ class List extends React.Component {
         });
 
         console.log(this.state.list);
+
     }
+  }
+
+  checkDone(index){
+      console.log('clicked checkDone' + index);
+      console.log(this.state.list[index].task);
+
+      if (this.state.list[index].done === "false"){
+          this.state.list[index].done = "true";
+      } else if (this.state.list[index].done === "true") {
+          this.state.list[index].done = "false";
+      }
+
+      this.setState({
+
+          list: this.state.list
+
+      });
+
+      console.log(this.state.list);
   }
 
   render() {
       // render the list with a map() here
-      let listItems = this.state.list.map( (listTtem, index) => {
+      let listItems = this.state.list.map( (listItem, index) => {
 
-          if(listTtem.done === "false"){
+          if(listItem.done === "false"){
               return (
                   <div className="list-item" key={index} >
-                      <i class='bx bx-checkbox'></i>
-                        {listTtem.task}
+                      <i className='bx bx-checkbox' onClick={ () => { this.checkDone(index)}}></i>
+                        {listItem.task}
                 </div>
                     );
-          } else if(listTtem.done === "done"){
+          } else if(listItem.done === "true"){
               return (
                   <div className="list-item completed" key={index} >
-                      <i class='bx bx-checkbox-checked' ></i>
-                        {listTtem.task}
+                      <i className='bx bx-checkbox-checked' onClick={ () => { this.checkDone(index)}}></i>
+                        {listItem.task}
                     </div>
                 );
           }
@@ -105,8 +125,8 @@ class List extends React.Component {
         });
       // console.log("rendering");
       return (
-         <div class="container">
-            <div class="add-item">
+         <div className="container">
+            <div className="add-item">
                 <input onChange={(event)=>{this.changeHandler(event)}} onKeyDown={(event)=>{this.enterHandler(event)}} value={this.state.task}/>
                 <button onClick={(event)=>{this.addItem(event)}}>Add</button>
             </div>
