@@ -9,14 +9,32 @@ class List extends React.Component {
           {
             "task": "Eat laksa",
             "done": "true",
-            "created_at": "August 29th 2019, 1:40:58 pm",
-            "updated_at": "August 29th 2019, 1:40:58 pm"
+            "created_at": "2019-08-11T16:06:11+08:00",
+            "updated_at": "2019-08-11T16:06:11+08:00"
           },
           {
             "task": "Go swimming",
             "done": "true",
-            "created_at": "August 29th 2019, 1:40:58 pm",
-            "updated_at": "August 29th 2019, 1:40:58 pm"
+            "created_at": "2019-08-22T16:08:11+08:00",
+            "updated_at": "2019-08-22T16:08:11+08:00"
+          },
+          {
+            "task": "Play Mario Kart",
+            "done": "false",
+            "created_at": "2019-08-25T16:06:11+08:00",
+            "updated_at": "2019-08-25T16:06:11+08:00"
+          },
+          {
+            "task": "Sing Karaoke",
+            "done": "true",
+            "created_at": "2019-08-26T16:08:11+08:00",
+            "updated_at": "2019-08-26T16:08:11+08:00"
+          },
+          {
+            "task": "Do homework",
+            "done": "false",
+            "created_at": "2019-08-28T16:08:11+08:00",
+            "updated_at": "2019-08-28T16:08:11+08:00"
           },
 
       ]
@@ -31,8 +49,8 @@ class List extends React.Component {
     this.state.list.push({
        "task": newTask,
        "done": "false",
-       "created_at": moment().format('MMMM Do YYYY, h:mm:ss a'),
-       "updated_at": moment().format('MMMM Do YYYY, h:mm:ss a')
+       "created_at": moment().format(),
+       "updated_at": moment().format()
     })
 
     this.setState({
@@ -118,19 +136,25 @@ class List extends React.Component {
       // render the list with a map() here
       let listItems = this.state.list.map( (listItem, index) => {
 
+          let updatedTime = listItem.updated_at;
+          let displayTime = moment(updatedTime).fromNow();
+
           if(listItem.done === "false"){
               return (
                   <div className="list-item" key={index}  onClick={ () => { this.checkDone(index)}}>
                       <i className='bx bx-checkbox'></i>
                      <span className="item-task">{listItem.task}</span>
+                     <span className="item-date">{displayTime}</span>
                      <div className="trash"><i className='bx bx-trash-alt' onClick={ () => { this.delete(index)}} ></i></div>
                 </div>
                     );
           } else if(listItem.done === "true"){
+
               return (
                   <div className="list-item completed" key={index} onClick={ () => { this.checkDone(index)}} >
                       <i className='bx bx-checkbox-checked'></i>
                         <span className="item-task">{listItem.task}</span>
+                        <span className="item-date">{displayTime}</span>
                         <div className="trash"><i className='bx bx-trash-alt' onClick={ () => { this.delete(index)}} ></i></div>
                     </div>
                 );
