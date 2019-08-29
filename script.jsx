@@ -102,6 +102,18 @@ class List extends React.Component {
       console.log(this.state.list);
   }
 
+  delete(index){
+      console.log('delete ' + this.state.list[index].task);
+
+      this.state.list.splice(index,1);
+
+      this.setState({
+
+          list: this.state.list
+
+      });
+  }
+
   render() {
       // render the list with a map() here
       let listItems = this.state.list.map( (listItem, index) => {
@@ -110,14 +122,16 @@ class List extends React.Component {
               return (
                   <div className="list-item" key={index}  onClick={ () => { this.checkDone(index)}}>
                       <i className='bx bx-checkbox'></i>
-                        {listItem.task}
+                     <span className="item-task">{listItem.task}</span>
+                     <div className="trash"><i className='bx bx-trash-alt' onClick={ () => { this.delete(index)}} ></i></div>
                 </div>
                     );
           } else if(listItem.done === "true"){
               return (
                   <div className="list-item completed" key={index} onClick={ () => { this.checkDone(index)}} >
                       <i className='bx bx-checkbox-checked'></i>
-                        {listItem.task}
+                        <span className="item-task">{listItem.task}</span>
+                        <div className="trash"><i className='bx bx-trash-alt' onClick={ () => { this.delete(index)}} ></i></div>
                     </div>
                 );
           }

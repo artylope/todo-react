@@ -50,19 +50,32 @@ button {
   .list .list-item {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     background-color: white;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
     border-bottom: 1px solid #eee;
-    padding: 10px; }
+    padding: 15px; }
     .list .list-item .bx {
-      font-size: 24px;
-      margin-right: 5px; }
+      font-size: 24px; }
+    .list .list-item .bx-checkbox, .list .list-item .bx-checkbox-checked {
+      flex-basis: 30px; }
+    .list .list-item .trash {
+      visibility: hidden;
+      flex-basis: 20px; }
+      .list .list-item .trash .bx-trash-alt {
+        color: #333;
+        font-size: 20px; }
+    .list .list-item .item-task {
+      flex-basis: 90%; }
     .list .list-item.completed {
       color: #999; }
     .list .list-item:hover {
       background-color: #eee; }
+      .list .list-item:hover .trash {
+        visibility: visible; }
+        .list .list-item:hover .trash:hover {
+          color: red; }
     .list .list-item:first-child {
       border-top-left-radius: 5px;
       border-top-right-radius: 5px; }

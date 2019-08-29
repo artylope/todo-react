@@ -62,16 +62,34 @@ button{
     .list-item{
         display: flex;
         flex-direction: row;
-        justify-content: flex-start;
+        justify-content: space-between;
         align-items: center;
         background-color: white;
         box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2);
         border-bottom: 1px solid #eee;
-        padding: 10px;
+        padding: 15px;
 
         .bx{
             font-size: 24px;
-            margin-right: 5px;
+        }
+
+        .bx-checkbox, .bx-checkbox-checked{
+            flex-basis: 30px;
+        }
+
+        .trash{
+            visibility: hidden;
+            flex-basis: 20px;
+
+            .bx-trash-alt{
+                color: #333;
+                font-size: 20px;
+            }
+
+        }
+
+        .item-task{
+            flex-basis: 90%;
         }
 
         &.completed{
@@ -81,6 +99,14 @@ button{
 
         &:hover{
             background-color: #eee;
+
+            .trash{
+                visibility: visible;
+
+                &:hover{
+                    color: red;
+                }
+            }
         }
 
         &:first-child{
