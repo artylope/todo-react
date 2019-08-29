@@ -38,20 +38,48 @@ class List extends React.Component {
     this.setState({
 
         list: this.state.list,
-        task: "" 
+        task: ""
 
     });
 
-    // console.log(this.state.list);
+    console.log(this.state.list);
   }
 
-  changeHandler(){
+  changeHandler(event){
     // debugger;
     // console.log('inside changeHandler. Word: ' + event.target.value);
 
     this.setState({
         task: event.target.value
     });
+  }
+
+  enterHandler(event){
+    // debugger;
+    // console.log('inside changeHandler. Word: ' + event.target.value);
+
+    // console.log(event.key);
+    if (event.key === "Enter"){
+
+        let newTask = this.state.task;
+        // console.log('inside add item button. new task: ' + newTask );
+
+        this.state.list.push({
+           "task": newTask,
+           "done": "false",
+           "created_at": moment().format('MMMM Do YYYY, h:mm:ss a'),
+           "updated_at": moment().format('MMMM Do YYYY, h:mm:ss a')
+        })
+
+        this.setState({
+
+            list: this.state.list,
+            task: ""
+
+        });
+
+        console.log(this.state.list);
+    }
   }
 
   render() {
@@ -79,7 +107,7 @@ class List extends React.Component {
       return (
          <div class="container">
             <div class="add-item">
-                <input onChange={(event)=>{this.changeHandler(event)}} value={this.state.task}/>
+                <input onChange={(event)=>{this.changeHandler(event)}} onKeyDown={(event)=>{this.enterHandler(event)}} value={this.state.task}/>
                 <button onClick={(event)=>{this.addItem(event)}}>Add</button>
             </div>
             <div className="list">
