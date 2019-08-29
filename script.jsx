@@ -35,7 +35,12 @@ class List extends React.Component {
        "updated_at": moment().format('MMMM Do YYYY, h:mm:ss a')
     })
 
-    this.setState({ list: this.state.list });
+    this.setState({
+
+        list: this.state.list,
+        task: "" 
+
+    });
 
     // console.log(this.state.list);
   }

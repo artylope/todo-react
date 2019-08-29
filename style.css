@@ -22,7 +22,7 @@ button {
 
 .container {
   margin: 0 auto;
-  width: 700px;
+  width: 500px;
   margin-top: 30px; }
 
 .list {
@@ -32,7 +32,10 @@ button {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center; }
+    align-items: center;
+    background-color: #eee;
+    border-radius: 3px;
+    padding: 5px; }
     .list .list-item.completed {
       color: #aaa; }
     .list .list-item .bx {
