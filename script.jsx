@@ -85,8 +85,8 @@ class List extends React.Component {
         this.state.list.push({
            "task": newTask,
            "done": "false",
-           "created_at": moment().format('MMMM Do YYYY, h:mm:ss a'),
-           "updated_at": moment().format('MMMM Do YYYY, h:mm:ss a')
+           "created_at": moment().format(),
+           "updated_at": moment().format()
         })
 
         this.setState({
@@ -107,9 +107,11 @@ class List extends React.Component {
 
       if (this.state.list[index].done === "false"){
           this.state.list[index].done = "true";
-          this.state.list[index].updated_at = "true";
+          this.state.list[index].updated_at = moment().format();
       } else if (this.state.list[index].done === "true") {
           this.state.list[index].done = "false";
+          this.state.list[index].updated_at = moment().format();
+
       }
 
       this.setState({
