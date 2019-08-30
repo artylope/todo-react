@@ -107,6 +107,7 @@ class List extends React.Component {
 
       if (this.state.list[index].done === "false"){
           this.state.list[index].done = "true";
+          this.state.list[index].updated_at = "true";
       } else if (this.state.list[index].done === "true") {
           this.state.list[index].done = "false";
       }
