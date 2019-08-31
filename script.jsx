@@ -1,8 +1,15 @@
 
 class App extends React.Component{
+    constructor(){
+        super()
+        this.state = {
+            todos : todosData
+        }
+
+    }
     render(){
-        const todoComponents = todosData.map(function(item, index){
-            return <TodoItem key={index} item = {item}/>
+        const todoComponents = this.state.todos.map(function(item, index){
+            return <TodoItem id={item.id} key={index} item = {item}/>
         })
         return(
             <div>
@@ -13,10 +20,19 @@ class App extends React.Component{
 }
 
 class TodoItem extends React.Component{
+
     render(){
         return(
             <div>
-                <input type="checkbox" checked ={this.props.item.done}/> {this.props.item.task}
+                <input
+                    id = {this.props.item.id}
+                    type="checkbox"
+                    checked = {this.props.item.done}
+                    onChange = {function(event){
+                        console.log("done " , event.target);
+                    }}
+                />
+                    {this.props.item.task}
             </div>
         )
     }
