@@ -59,10 +59,19 @@ class TodoItem extends React.Component{
 
     render(){
         console.log(this.props.item.task)
+
+        let updatedTime = this.props.item.updated_at;
+        let displayTime = moment(updatedTime).fromNow();
+
         return(
-            <div className="list-item">
-                {this.props.item.task}
+
+            <div className={this.props.item.done ? 'list-item completed' : 'list-item' }>
+                <i className={this.props.item.done ? 'bx bx-checkbox-checked' : 'bx bx-checkbox' }></i>
+                <span className="item-task">{this.props.item.task}</span>
+                <span className="item-date">{displayTime}</span>
+                <div className="trash"><i className='bx bx-trash-alt'></i></div>
             </div>
+            
         )
     }
 }
