@@ -4,7 +4,7 @@ class App extends React.Component{
         super()
 
         this.state = {
-
+            todos : todosData
         }
     }
 
@@ -14,7 +14,7 @@ class App extends React.Component{
             <div className="container">
                 this is container
                 <Form/>
-                <TodoList/>
+                <TodoList todos={this.state.todos}/>
                 <DeletedItemsList/>
             </div>
         )
@@ -37,13 +37,19 @@ class Form extends React.Component{
 class TodoList extends React.Component{
 
     render(){
+        console.log('in todos list component');
+        console.log(this.props.todos);
+
+        const todoComponents = this.props.todos.map( function(item,index){
+            return(
+                <TodoItem key = {index} item={item}/>
+            )
+        })
+
         return(
             <div className="list">
             <h1>Todo list</h1>
-                <TodoItem/>
-                <TodoItem/>
-                <TodoItem/>
-                <TodoItem/>
+                {todoComponents}
             </div>
         )
     }
@@ -52,9 +58,10 @@ class TodoList extends React.Component{
 class TodoItem extends React.Component{
 
     render(){
+        console.log(this.props.item.task)
         return(
             <div className="list-item">
-                x This is an item
+                {this.props.item.task}
             </div>
         )
     }
@@ -66,8 +73,7 @@ class DeletedItemsList extends React.Component{
         return(
             <div className="deleted-list">
                 <h2>Deleted Items</h2>
-                <TodoItem/>
-                <TodoItem/>
+
             </div>
         )
     }
