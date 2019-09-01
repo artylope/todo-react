@@ -19,9 +19,9 @@ class App extends React.Component{
     //for the form input and padding
 
     handleInputChange(event){
-        console.log('Some text changed', event.target.value);
+        // console.log('Some text changed', event.target.value);
         let newTask = event.target.value;
-        console.log(newTask)
+        // console.log(newTask)
 
         this.setState({
 
@@ -34,7 +34,7 @@ class App extends React.Component{
     handleEnterInput(event){
 
         if(event.key === "Enter"){
-            console.log('you pressed enter! new task: ', event.target.value);
+            // console.log('you pressed enter! new task: ', event.target.value);
             let newTask = event.target.value;
             let allTodos = this.state.todos;
 
@@ -54,7 +54,7 @@ class App extends React.Component{
     }
 
     handleClickAdd(event){
-        console.log('you clicked add!', event.target.value);
+        // console.log('you clicked add!', event.target.value);
         let newTask = this.state.task;
         let allTodos = this.state.todos;
 
@@ -123,9 +123,9 @@ class Form extends React.Component{
 class TodoList extends React.Component{
 
     render(){
-        console.log('in todos list component');
-        console.log(this.props);
-        console.log(this.props.todos);
+        // console.log('in todos list component');
+        // console.log(this.props);
+        // console.log(this.props.todos);
 
         const todoComponents = this.props.todos.map( function(item,index){
             return(
@@ -149,8 +149,8 @@ class TodoList extends React.Component{
 class TodoItem extends React.Component{
 
     render(){
-        console.log("in todo item")
-        console.log(this.props)
+        // console.log("in todo item")
+        // console.log(this.props)
 
         let updatedTime = this.props.item.updated_at;
         let displayTime = moment(updatedTime).fromNow();
