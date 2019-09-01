@@ -1,7 +1,7 @@
 const todosData = [
     {
         id: 1,
-        "task": "Eat laksa",
+        "task": "Eat Chicken Rice",
         "done": true,
         "created_at": "2019-08-11T16:06:11+08:00",
         "updated_at": "2019-08-11T16:06:11+08:00"
