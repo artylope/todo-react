@@ -4,25 +4,84 @@ class App extends React.Component{
         super()
 
         this.state = {
-            todos : todosData,
-            deletedTodos : []
+            todos : [
+                {
+                    id: 1,
+                    "task": "Eat laksa",
+                    "done": true,
+                    "created_at": "2019-08-11T16:06:11+08:00",
+                    "updated_at": "2019-08-11T16:06:11+08:00"
+                },
+                {
+                    id: 2,
+                    "task": "Go swimming",
+                    "done": true,
+                    "created_at": "2019-08-22T16:08:11+08:00",
+                    "updated_at": "2019-08-22T16:08:11+08:00"
+                },
+                {
+                    id: 3,
+                    "task": "Play Mario Kart",
+                    "done": false,
+                    "created_at": "2019-08-25T16:06:11+08:00",
+                    "updated_at": "2019-08-25T16:06:11+08:00"
+                },
+                {
+                    id: 4,
+                    "task": "Sing Karaoke",
+                    "done": true,
+                    "created_at": "2019-08-26T16:08:11+08:00",
+                    "updated_at": "2019-08-26T16:08:11+08:00"
+                },
+                {
+                    id: 5,
+                    "task": "Do homework",
+                    "done": false,
+                    "created_at": "2019-09-01T06:55:11+08:00",
+                    "updated_at": "2019-09-01T06:55:11+08:00"
+                }
+
+            ]
         }
+
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleEnterInput = this.handleEnterInput.bind(this);
+
+        this.handleClickAdd = this.handleClickAdd.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     //for the form input and padding
 
-    handleInputChange(){
-        console.log('Some text changed');
+    handleInputChange(event){
+        // console.log('Some text changed',event);
     }
 
     handleEnterInput(event){
+
         if(event.key === "Enter"){
-            console.log('you pressed enter!');
+            console.log('you pressed enter! new task: ', event.target.value);
+            let newTask = event.target.value;
+            let allTodos = this.state.todos;
+
+            allTodos.push({
+               "task": newTask,
+               "done": "false",
+               "created_at": moment().format(),
+               "updated_at": moment().format()
+            })
+
+            this.setState({
+
+                todos: allTodos
+
+            });
         }
     }
 
-    handleClickAdd(){
-        console.log('you clicked add!');
+    handleClickAdd(event){
+        console.log('you clicked add!', event);
     }
 
 
@@ -45,7 +104,9 @@ class App extends React.Component{
                     onClick= {this.handleClickAdd}
                     onKeyDown= {this.handleEnterInput}
                     onChange={this.handleInputChange}/>
-                <TodoList todos={this.state.todos} onChange={this.handleChange}/>
+                <TodoList
+                    todos={this.state.todos}
+                    onChange={this.handleChange}/>
                 <DeletedItemsList/>
             </div>
         )
@@ -58,8 +119,11 @@ class Form extends React.Component{
     render(){
         return(
             <div className="add-item">
-                <input onChange={this.props.onChange} onKeyDown={this.props.onKeyDown} placeholder="New Task"/>
-                <button onClick={this.props.onClick}>Add</button>
+                <input
+                    onChange={this.props.onChange}
+                    onKeyDown={(event) => this.props.onKeyDown(event)}
+                    placeholder="New Task"/>
+                <button onClick={(event) => this.props.onClick(event)}>Add</button>
             </div>
         )
     }
@@ -74,7 +138,11 @@ class TodoList extends React.Component{
 
         const todoComponents = this.props.todos.map( function(item,index){
             return(
-                <TodoItem key = {index} item={item}/>
+                <TodoItem
+                    key = {index}
+                    item={item}
+                    // onChange={this.props.onChange}
+                />
             )
         })
 
@@ -98,7 +166,10 @@ class TodoItem extends React.Component{
 
         return(
 
-            <div className={this.props.item.done ? 'list-item completed' : 'list-item' }>
+            <div
+            className={this.props.item.done ? 'list-item completed' : 'list-item' }
+            // onChange={() => this.props.onChange(this.props.item.id)}
+            >
                 <i className={this.props.item.done ? 'bx bx-checkbox-checked' : 'bx bx-checkbox' }></i>
                 <span className="item-task">{this.props.item.task}</span>
                 <span className="item-date">{displayTime}</span>
