@@ -6,7 +6,8 @@ class App extends React.Component{
         this.state = {
             todos : todosData,
             task: "",
-            deletedTodos: []
+            deletedTodos: [],
+            validateMsg: ""
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -22,22 +23,39 @@ class App extends React.Component{
     handleInputChange(event){
         // console.log('Some text changed', event.target.value);
         let newTask = event.target.value;
+        let validateMsg = this.state.validateMsg;
         // console.log(newTask)
 
         this.setState({
-
             task: newTask
-
         });
 
+        if(newTask.length != 0){
+            validateMsg = "";
+            this.setState({
+                validateMsg: validateMsg
+            });
+        }
     }
 
     handleEnterInput(event){
+
+
 
         if(event.key === "Enter"){
             // console.log('you pressed enter! new task: ', event.target.value);
             let newTask = event.target.value;
             let allTodos = this.state.todos;
+            let validateMsg = this.state.validateMsg;
+
+
+            if (newTask === ""){
+                validateMsg = "Please enter a task.";
+                this.setState({
+                    validateMsg: validateMsg
+                });
+            }
+
 
             allTodos.push({
                "task": newTask,
@@ -58,6 +76,14 @@ class App extends React.Component{
         // console.log('you clicked add!', event.target.value);
         let newTask = this.state.task;
         let allTodos = this.state.todos;
+        let validateMsg = this.state.validateMsg;
+
+        if (newTask === ""){
+            validateMsg = "Please enter a task.";
+            this.setState({
+                validateMsg: validateMsg
+            });
+        }
 
         allTodos.push({
            "task": newTask,
@@ -133,7 +159,8 @@ class App extends React.Component{
                     onClick= {this.handleClickAdd}
                     onKeyDown= {this.handleEnterInput}
                     onChange={this.handleInputChange}
-                    newTask= {this.state.task}/>
+                    newTask= {this.state.task}
+                    validateMsg = {this.state.validateMsg}/>
                 <TodoList
                     todos={this.state.todos}
                     handleCheckDone={this.handleCheckDone}
@@ -151,19 +178,25 @@ class App extends React.Component{
 class Form extends React.Component{
 
     render(){
+
         return(
-            <div className="add-item">
-                <input
-                    onChange={(event) => this.props.onChange(event)}
-                    onKeyDown={(event) => this.props.onKeyDown(event)}
-                    placeholder="New Task"
-                    value={this.props.newTask}
-                    />
-                <button onClick={(event) => this.props.onClick(event)}>Add</button>
-            </div>
+            <React.Fragment>
+                <div className="add-item">
+                    <input
+                        onChange={(event) => this.props.onChange(event)}
+                        onKeyDown={(event) => this.props.onKeyDown(event)}
+                        placeholder="New Task"
+                        value={this.props.newTask}
+                        />
+                    <button onClick={(event) => this.props.onClick(event)}>Add</button>
+                </div>
+                <p className="warning">{this.props.validateMsg}</p>
+            </React.Fragment>
+
         )
     }
 }
+
 
 class TodoList extends React.Component{
 

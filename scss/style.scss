@@ -148,7 +148,7 @@ h1{
                 visibility: visible;
 
                 &:hover{
-                    color: red;
+                    color: #ff4d4d;
                 }
             }
         }
@@ -184,4 +184,8 @@ h1{
         }
 
     }
+}
+
+.warning{
+    color: #ff4d4d;
 }
