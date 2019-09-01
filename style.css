@@ -109,3 +109,13 @@ h1 {
   .list-item:last-child {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px; }
+
+.deleted-list .list-item {
+  background-color: #555;
+  border-bottom: 1px solid #444; }
+  .deleted-list .list-item .bx {
+    color: #333; }
+  .deleted-list .list-item .item-task {
+    color: #333; }
+  .deleted-list .list-item .item-date {
+    color: #333; }

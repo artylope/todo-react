@@ -5,7 +5,8 @@ class App extends React.Component{
 
         this.state = {
             todos : todosData,
-            task: ""
+            task: "",
+            deletedTodos: []
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -98,15 +99,28 @@ class App extends React.Component{
     handleDelete(index){
         // console.log('you deleted this todo', index);
 
+
+
         let allTodos = this.state.todos;
+        let deletedTodo = allTodos[index];
+        let deletedTodos = this.state.deletedTodos;
+
+        //update the time of the deleted todo
+        deletedTodo.updated_at = moment().format();
+
+        deletedTodos.push(deletedTodo);
 
         allTodos.splice(index,1);
 
         this.setState({
 
-            todos: allTodos
+            todos: allTodos,
+            deletedTodos: deletedTodos
 
         });
+
+        console.log('deleted todos ');
+        console.log(this.state.deletedTodos);
 
     }
 
@@ -125,7 +139,9 @@ class App extends React.Component{
                     handleCheckDone={this.handleCheckDone}
                     handleDelete={this.handleDelete}
                     />
-                <DeletedItemsList/>
+                <DeletedItemsList
+                    deletedTodos={this.state.deletedTodos}
+                />
             </div>
         )
 
@@ -214,10 +230,24 @@ class TodoItem extends React.Component{
 class DeletedItemsList extends React.Component{
 
     render(){
+
+        const deletedTodoComponents = this.props.deletedTodos.map( (item,index) => {
+            return(
+                <TodoItem
+                    key = {index}
+                    index = {index}
+                    item = {item}
+                    handleCheckDone={this.props.handleCheckDone}
+                    handleDelete = {this.props.handleDelete}
+                    />
+
+            )
+        })
+
         return(
             <div className="deleted-list">
                 <h2>Deleted Items</h2>
-
+                {deletedTodoComponents}
             </div>
         )
     }
