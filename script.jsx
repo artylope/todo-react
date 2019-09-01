@@ -41,7 +41,8 @@ class App extends React.Component{
                     "updated_at": "2019-09-01T06:55:11+08:00"
                 }
 
-            ]
+            ],
+            task: ""
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -55,7 +56,16 @@ class App extends React.Component{
     //for the form input and padding
 
     handleInputChange(event){
-        // console.log('Some text changed',event);
+        console.log('Some text changed', event.target.value);
+        let newTask = event.target.value;
+        console.log(newTask)
+
+        this.setState({
+
+            task: newTask
+
+        });
+
     }
 
     handleEnterInput(event){
@@ -81,7 +91,22 @@ class App extends React.Component{
     }
 
     handleClickAdd(event){
-        console.log('you clicked add!', event);
+        console.log('you clicked add!', event.target.value);
+        let newTask = this.state.task;
+        let allTodos = this.state.todos;
+
+        allTodos.push({
+           "task": newTask,
+           "done": "false",
+           "created_at": moment().format(),
+           "updated_at": moment().format()
+        })
+
+        this.setState({
+
+            todos: allTodos
+
+        });
     }
 
 
@@ -103,7 +128,8 @@ class App extends React.Component{
                 <Form
                     onClick= {this.handleClickAdd}
                     onKeyDown= {this.handleEnterInput}
-                    onChange={this.handleInputChange}/>
+                    onChange={this.handleInputChange}
+                    newTask= {this.state.task}/>
                 <TodoList
                     todos={this.state.todos}
                     onChange={this.handleChange}/>
@@ -120,9 +146,11 @@ class Form extends React.Component{
         return(
             <div className="add-item">
                 <input
-                    onChange={this.props.onChange}
+                    onChange={(event) => this.props.onChange(event)}
                     onKeyDown={(event) => this.props.onKeyDown(event)}
-                    placeholder="New Task"/>
+                    placeholder="New Task"
+                    value={this.props.newTask}
+                    />
                 <button onClick={(event) => this.props.onClick(event)}>Add</button>
             </div>
         )
