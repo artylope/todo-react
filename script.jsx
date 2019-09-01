@@ -75,11 +75,39 @@ class App extends React.Component{
 
     //for interacting with the list item
     handleCheckDone(index){
-        console.log('you checked/unchecked done', index);
+        // console.log('you checked/unchecked done', index);
+
+        let allTodos = this.state.todos;
+
+        if(allTodos[index].done === true){
+            allTodos[index].done = false;
+            allTodos[index].updated_at = moment().format();
+        } else if (allTodos[index].done === false){
+            allTodos[index].done = true;
+            allTodos[index].updated_at = moment().format();
+        }
+
+        this.setState({
+
+            todos: allTodos
+
+        });
+
     }
 
     handleDelete(index){
-        console.log('you deleted this todo', index);
+        // console.log('you deleted this todo', index);
+
+        let allTodos = this.state.todos;
+
+        allTodos.splice(index,1);
+
+        this.setState({
+
+            todos: allTodos
+
+        });
+
     }
 
 
