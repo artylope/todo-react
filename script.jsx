@@ -10,9 +10,9 @@ class App extends React.Component{
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleEnterInput = this.handleEnterInput.bind(this);
-
         this.handleClickAdd = this.handleClickAdd.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+
+        this.handleCheckDone = this.handleCheckDone.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
     }
 
@@ -74,12 +74,12 @@ class App extends React.Component{
 
 
     //for interacting with the list item
-    handleChange(){
-        console.log('you checked/unchecked done');
+    handleCheckDone(index){
+        console.log('you checked/unchecked done', index);
     }
 
-    handleDelete(){
-        console.log('you deleted this todo');
+    handleDelete(index){
+        console.log('you deleted this todo', index);
     }
 
 
@@ -87,7 +87,6 @@ class App extends React.Component{
         return(
 
             <div className="container">
-                this is container
                 <Form
                     onClick= {this.handleClickAdd}
                     onKeyDown= {this.handleEnterInput}
@@ -95,7 +94,9 @@ class App extends React.Component{
                     newTask= {this.state.task}/>
                 <TodoList
                     todos={this.state.todos}
-                    onChange={this.handleChange}/>
+                    handleCheckDone={this.handleCheckDone}
+                    handleDelete={this.handleDelete}
+                    />
                 <DeletedItemsList/>
             </div>
         )
@@ -122,18 +123,22 @@ class Form extends React.Component{
 
 class TodoList extends React.Component{
 
+
     render(){
-        // console.log('in todos list component');
-        // console.log(this.props);
+        console.log('in todos list component');
+        console.log(this.props);
         // console.log(this.props.todos);
 
-        const todoComponents = this.props.todos.map( function(item,index){
+        const todoComponents = this.props.todos.map( (item,index) => {
             return(
                 <TodoItem
                     key = {index}
-                    item={item}
-                    // onChange={this.props.onChange}
-                />
+                    index = {index}
+                    item = {item}
+                    handleCheckDone={this.props.handleCheckDone}
+                    handleDelete = {this.props.handleDelete}
+                    />
+
             )
         })
 
@@ -149,22 +154,29 @@ class TodoList extends React.Component{
 class TodoItem extends React.Component{
 
     render(){
-        // console.log("in todo item")
-        // console.log(this.props)
+        console.log("in todo item")
+        console.log(this.props)
 
         let updatedTime = this.props.item.updated_at;
         let displayTime = moment(updatedTime).fromNow();
+        let index = this.props.index;
+        let item = this.props.item;
 
         return(
 
             <div
-            className={this.props.item.done ? 'list-item completed' : 'list-item' }
-            // onChange={() => this.props.onChange(this.props.item.id)}
-            >
-                <i className={this.props.item.done ? 'bx bx-checkbox-checked' : 'bx bx-checkbox' }></i>
-                <span className="item-task">{this.props.item.task}</span>
+            className={item.done ? 'list-item completed' : 'list-item' }>
+                <i
+                    className={item.done ? 'bx bx-checkbox-checked' : 'bx bx-checkbox' }
+                    onClick={()=>{this.props.handleCheckDone(index)}}></i>
+                <span
+                    className="item-task"
+                    onClick={()=>{this.props.handleCheckDone(index)}}>{item.task}</span>
                 <span className="item-date">{displayTime}</span>
-                <div className="trash"><i className='bx bx-trash-alt'></i></div>
+                <div
+                 className="trash"
+                 onClick={()=>{this.props.handleDelete(index)}}>
+                 <i className='bx bx-trash-alt'></i></div>
             </div>
 
         )
