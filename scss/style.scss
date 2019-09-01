@@ -18,8 +18,13 @@ h1{
 
 .container{
     margin: 0 auto;
-    width: 500px;
-    margin-top: 30px;
+    // width: 500px;
+    // margin-top: 30px;
+    background-color: #121214;
+    height: 100%;
+    width: 100%;
+    max-width: 700px;
+    padding: 20px;
 }
 
 .add-item{
@@ -75,10 +80,16 @@ h1{
 }
 
 .list {
-
     margin-top: 30px;
-    border-radius: 3px;
-    background-color: white;
+}
+
+.deleted-list{
+    margin-top: 50px;
+
+    h2{
+        color: #eee;
+    }
+}
 
 
     .list-item{
@@ -137,7 +148,7 @@ h1{
                 visibility: visible;
 
                 &:hover{
-                    color: red;
+                    color: #ff4d4d;
                 }
             }
         }
@@ -152,4 +163,29 @@ h1{
             border-bottom-right-radius: 5px;
         }
     }
+
+
+.deleted-list{
+    .list-item{
+        background-color: #555;
+        border-bottom: 1px solid #444;
+
+
+        .bx{
+            color: #333;
+        }
+
+        .item-task{
+            color: #333;
+        }
+
+        .item-date{
+            color: #333;
+        }
+
+    }
+}
+
+.warning{
+    color: #ff4d4d;
 }

@@ -13,8 +13,11 @@ h1 {
 
 .container {
   margin: 0 auto;
-  width: 500px;
-  margin-top: 30px; }
+  background-color: #121214;
+  height: 100%;
+  width: 100%;
+  max-width: 700px;
+  padding: 20px; }
 
 .add-item {
   display: flex;
@@ -56,49 +59,66 @@ h1 {
       background: #666; }
 
 .list {
-  margin-top: 30px;
-  border-radius: 3px;
-  background-color: white; }
-  .list .list-item {
+  margin-top: 30px; }
+
+.deleted-list {
+  margin-top: 50px; }
+  .deleted-list h2 {
+    color: #eee; }
+
+.list-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid #eee;
+  padding: 15px; }
+  .list-item .bx {
+    font-size: 24px; }
+  .list-item .bx-checkbox, .list-item .bx-checkbox-checked {
+    flex-basis: 30px; }
+  .list-item .trash {
+    visibility: hidden;
+    flex-basis: 20px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
-    border-bottom: 1px solid #eee;
-    padding: 15px; }
-    .list .list-item .bx {
-      font-size: 24px; }
-    .list .list-item .bx-checkbox, .list .list-item .bx-checkbox-checked {
-      flex-basis: 30px; }
-    .list .list-item .trash {
-      visibility: hidden;
-      flex-basis: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center; }
-      .list .list-item .trash .bx-trash-alt {
-        color: #ff4d4d;
-        font-size: 20px; }
-    .list .list-item .item-task {
-      flex-basis: 75%; }
-    .list .list-item .item-date {
-      flex-basis: 25%;
-      font-size: .7em;
-      opacity: .6;
-      vertical-align: baseline; }
-    .list .list-item.completed {
-      color: #999; }
-    .list .list-item:hover {
-      background-color: #eee; }
-      .list .list-item:hover .trash {
-        visibility: visible; }
-        .list .list-item:hover .trash:hover {
-          color: red; }
-    .list .list-item:first-child {
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px; }
-    .list .list-item:last-child {
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px; }
+    justify-content: center;
+    align-items: center; }
+    .list-item .trash .bx-trash-alt {
+      color: #ff4d4d;
+      font-size: 20px; }
+  .list-item .item-task {
+    flex-basis: 75%; }
+  .list-item .item-date {
+    flex-basis: 25%;
+    font-size: .7em;
+    opacity: .6;
+    vertical-align: baseline; }
+  .list-item.completed {
+    color: #999; }
+  .list-item:hover {
+    background-color: #eee; }
+    .list-item:hover .trash {
+      visibility: visible; }
+      .list-item:hover .trash:hover {
+        color: #ff4d4d; }
+  .list-item:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px; }
+  .list-item:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px; }
+
+.deleted-list .list-item {
+  background-color: #555;
+  border-bottom: 1px solid #444; }
+  .deleted-list .list-item .bx {
+    color: #333; }
+  .deleted-list .list-item .item-task {
+    color: #333; }
+  .deleted-list .list-item .item-date {
+    color: #333; }
+
+.warning {
+  color: #ff4d4d; }

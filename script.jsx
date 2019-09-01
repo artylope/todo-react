@@ -1,88 +1,91 @@
+class App extends React.Component{
 
-class List extends React.Component {
-  constructor(){
-    super()
+    constructor(){
+        super()
 
-    this.state = {
-      task:"",
-      list : [
-          {
-            "task": "Eat laksa",
-            "done": "true",
-            "created_at": "2019-08-11T16:06:11+08:00",
-            "updated_at": "2019-08-11T16:06:11+08:00"
-          },
-          {
-            "task": "Go swimming",
-            "done": "true",
-            "created_at": "2019-08-22T16:08:11+08:00",
-            "updated_at": "2019-08-22T16:08:11+08:00"
-          },
-          {
-            "task": "Play Mario Kart",
-            "done": "false",
-            "created_at": "2019-08-25T16:06:11+08:00",
-            "updated_at": "2019-08-25T16:06:11+08:00"
-          },
-          {
-            "task": "Sing Karaoke",
-            "done": "true",
-            "created_at": "2019-08-26T16:08:11+08:00",
-            "updated_at": "2019-08-26T16:08:11+08:00"
-          },
-          {
-            "task": "Do homework",
-            "done": "false",
-            "created_at": "2019-08-28T16:08:11+08:00",
-            "updated_at": "2019-08-28T16:08:11+08:00"
-          },
+        this.state = {
+            todos : todosData,
+            task: "",
+            deletedTodos: [],
+            validateMsg: ""
+        }
 
-      ]
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleEnterInput = this.handleEnterInput.bind(this);
+        this.handleClickAdd = this.handleClickAdd.bind(this);
+
+        this.handleCheckDone = this.handleCheckDone.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
-  }
 
-  addItem(event){
-    // debugger;
-    let newTask = this.state.task;
-    // console.log('inside add item button. new task: ' + newTask );
+    //for the form input and padding
 
-    this.state.list.push({
-       "task": newTask,
-       "done": "false",
-       "created_at": moment().format(),
-       "updated_at": moment().format()
-    })
+    handleInputChange(event){
+        // console.log('Some text changed', event.target.value);
+        let newTask = event.target.value;
+        let validateMsg = this.state.validateMsg;
+        // console.log(newTask)
 
-    this.setState({
+        this.setState({
+            task: newTask
+        });
 
-        list: this.state.list,
-        task: ""
+        if(newTask.length != 0){
+            validateMsg = "";
+            this.setState({
+                validateMsg: validateMsg
+            });
+        }
+    }
 
-    });
+    handleEnterInput(event){
 
-    console.log(this.state.list);
-  }
 
-  changeHandler(event){
-    // debugger;
-    // console.log('inside changeHandler. Word: ' + event.target.value);
 
-    this.setState({
-        task: event.target.value
-    });
-  }
+        if(event.key === "Enter"){
+            // console.log('you pressed enter! new task: ', event.target.value);
+            let newTask = event.target.value;
+            let allTodos = this.state.todos;
+            let validateMsg = this.state.validateMsg;
 
-  enterHandler(event){
-    // debugger;
-    // console.log('inside changeHandler. Word: ' + event.target.value);
 
-    // console.log(event.key);
-    if (event.key === "Enter"){
+            if (newTask === ""){
+                validateMsg = "Please enter a task.";
+                this.setState({
+                    validateMsg: validateMsg
+                });
+            }
 
+
+            allTodos.push({
+               "task": newTask,
+               "done": "false",
+               "created_at": moment().format(),
+               "updated_at": moment().format()
+            })
+
+            this.setState({
+
+                todos: allTodos
+
+            });
+        }
+    }
+
+    handleClickAdd(event){
+        // console.log('you clicked add!', event.target.value);
         let newTask = this.state.task;
-        // console.log('inside add item button. new task: ' + newTask );
+        let allTodos = this.state.todos;
+        let validateMsg = this.state.validateMsg;
 
-        this.state.list.push({
+        if (newTask === ""){
+            validateMsg = "Please enter a task.";
+            this.setState({
+                validateMsg: validateMsg
+            });
+        }
+
+        allTodos.push({
            "task": newTask,
            "done": "false",
            "created_at": moment().format(),
@@ -91,96 +94,199 @@ class List extends React.Component {
 
         this.setState({
 
-            list: this.state.list,
-            task: ""
+            todos: allTodos
 
         });
+    }
 
-        console.log(this.state.list);
+
+    //for interacting with the list item
+    handleCheckDone(index){
+        // console.log('you checked/unchecked done', index);
+
+        let allTodos = this.state.todos;
+
+        if(allTodos[index].done === true){
+            allTodos[index].done = false;
+            allTodos[index].updated_at = moment().format();
+        } else if (allTodos[index].done === false){
+            allTodos[index].done = true;
+            allTodos[index].updated_at = moment().format();
+        }
+
+        this.setState({
+
+            todos: allTodos
+
+        });
 
     }
-  }
 
-  checkDone(index){
-      console.log('clicked checkDone' + index);
-      console.log(this.state.list[index].task);
+    handleDelete(index){
+        // console.log('you deleted this todo', index);
 
-      if (this.state.list[index].done === "false"){
-          this.state.list[index].done = "true";
-          this.state.list[index].updated_at = moment().format();
-      } else if (this.state.list[index].done === "true") {
-          this.state.list[index].done = "false";
-          this.state.list[index].updated_at = moment().format();
 
-      }
 
-      this.setState({
+        let allTodos = this.state.todos;
+        let deletedTodo = allTodos[index];
+        let deletedTodos = this.state.deletedTodos;
 
-          list: this.state.list
+        //update the time of the deleted todo
+        deletedTodo.updated_at = moment().format();
 
-      });
+        deletedTodos.push(deletedTodo);
 
-      console.log(this.state.list);
-  }
+        allTodos.splice(index,1);
 
-  delete(index){
-      console.log('delete ' + this.state.list[index].task);
+        this.setState({
 
-      this.state.list.splice(index,1);
-
-      this.setState({
-
-          list: this.state.list
-
-      });
-  }
-
-  render() {
-      // render the list with a map() here
-      let listItems = this.state.list.map( (listItem, index) => {
-
-          let updatedTime = listItem.updated_at;
-          let displayTime = moment(updatedTime).fromNow();
-
-          if(listItem.done === "false"){
-              return (
-                  <div className="list-item" key={index}  onClick={ () => { this.checkDone(index)}}>
-                      <i className='bx bx-checkbox'></i>
-                     <span className="item-task">{listItem.task}</span>
-                     <span className="item-date">{displayTime}</span>
-                     <div className="trash"><i className='bx bx-trash-alt' onClick={ () => { this.delete(index)}} ></i></div>
-                </div>
-                    );
-          } else if(listItem.done === "true"){
-
-              return (
-                  <div className="list-item completed" key={index} onClick={ () => { this.checkDone(index)}} >
-                      <i className='bx bx-checkbox-checked'></i>
-                        <span className="item-task">{listItem.task}</span>
-                        <span className="item-date">{displayTime}</span>
-                        <div className="trash"><i className='bx bx-trash-alt' onClick={ () => { this.delete(index)}} ></i></div>
-                    </div>
-                );
-          }
+            todos: allTodos,
+            deletedTodos: deletedTodos
 
         });
-      // console.log("rendering");
-      return (
-         <div className="container">
-         <h1>To Do List</h1>
-            <div className="add-item">
-                <input onChange={(event)=>{this.changeHandler(event)}} onKeyDown={(event)=>{this.enterHandler(event)}} value={this.state.task}/>
-                <button onClick={(event)=>{this.addItem(event)}}>Add</button>
+
+        console.log('deleted todos ');
+        console.log(this.state.deletedTodos);
+
+    }
+
+
+    render(){
+        return(
+
+            <div className="container">
+                <Form
+                    onClick= {this.handleClickAdd}
+                    onKeyDown= {this.handleEnterInput}
+                    onChange={this.handleInputChange}
+                    newTask= {this.state.task}
+                    validateMsg = {this.state.validateMsg}/>
+                <TodoList
+                    todos={this.state.todos}
+                    handleCheckDone={this.handleCheckDone}
+                    handleDelete={this.handleDelete}
+                    />
+                <DeletedItemsList
+                    deletedTodos={this.state.deletedTodos}
+                />
             </div>
+        )
+
+    }
+}
+
+class Form extends React.Component{
+
+    render(){
+
+        return(
+            <React.Fragment>
+                <div className="add-item">
+                    <input
+                        onChange={(event) => this.props.onChange(event)}
+                        onKeyDown={(event) => this.props.onKeyDown(event)}
+                        placeholder="New Task"
+                        value={this.props.newTask}
+                        />
+                    <button onClick={(event) => this.props.onClick(event)}>Add</button>
+                </div>
+                <p className="warning">{this.props.validateMsg}</p>
+            </React.Fragment>
+
+        )
+    }
+}
+
+
+class TodoList extends React.Component{
+
+
+    render(){
+        console.log('in todos list component');
+        console.log(this.props);
+        // console.log(this.props.todos);
+
+        const todoComponents = this.props.todos.map( (item,index) => {
+            return(
+                <TodoItem
+                    key = {index}
+                    index = {index}
+                    item = {item}
+                    handleCheckDone={this.props.handleCheckDone}
+                    handleDelete = {this.props.handleDelete}
+                    />
+
+            )
+        })
+
+        return(
             <div className="list">
-                {listItems}
+            <h1>Todo list</h1>
+                {todoComponents}
             </div>
-        </div>
-      );
-  }
+        )
+    }
+}
+
+class TodoItem extends React.Component{
+
+    render(){
+        console.log("in todo item")
+        console.log(this.props)
+
+        let updatedTime = this.props.item.updated_at;
+        let displayTime = moment(updatedTime).fromNow();
+        let index = this.props.index;
+        let item = this.props.item;
+
+        return(
+
+            <div
+            className={item.done ? 'list-item completed' : 'list-item' }>
+                <i
+                    className={item.done ? 'bx bx-checkbox-checked' : 'bx bx-checkbox' }
+                    onClick={()=>{this.props.handleCheckDone(index)}}></i>
+                <span
+                    className="item-task"
+                    onClick={()=>{this.props.handleCheckDone(index)}}>{item.task}</span>
+                <span className="item-date">{displayTime}</span>
+                <div
+                 className="trash"
+                 onClick={()=>{this.props.handleDelete(index)}}>
+                 <i className='bx bx-trash-alt'></i></div>
+            </div>
+
+        )
+    }
+}
+
+class DeletedItemsList extends React.Component{
+
+    render(){
+
+        const deletedTodoComponents = this.props.deletedTodos.map( (item,index) => {
+            return(
+                <TodoItem
+                    key = {index}
+                    index = {index}
+                    item = {item}
+                    handleCheckDone={this.props.handleCheckDone}
+                    handleDelete = {this.props.handleDelete}
+                    />
+
+            )
+        })
+
+        return(
+            <div className="deleted-list">
+                <h2>Deleted Items</h2>
+                {deletedTodoComponents}
+            </div>
+        )
+    }
 }
 
 ReactDOM.render(
-    <List/>,
+    <App/>,
     document.getElementById('root')
 );
