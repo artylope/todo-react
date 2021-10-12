@@ -4,7 +4,7 @@
 
 Start with the starter code in script.js.
 
-Do `npm install` to get and run `http-server index.html`
+Do `npm install` to get and run `http-server` go to localhost/index.html
 (you will need it so that script.jsx works correctly)
 
 #### Create a todo list app:
